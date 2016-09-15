@@ -118,6 +118,7 @@ public abstract class Fleet {
        
    }//end of constructor
    
+   SecureRandom combatDie = new SecureRandom();//new RNG object
    
    //return dreadnoughts
    public int getDreadnoughts(){
@@ -187,7 +188,7 @@ public abstract class Fleet {
    public int spaceBattle(int dreadnoughtsCV, int carriersCV, int cruisersCV,
                         int destroyersCV, int fightersCV, int warSunCV){
   
-       SecureRandom combatDie = new SecureRandom();//new RNG object
+       
        int hits = 0;
        
        for(int i = getDreadnoughts(); i > 0; i--){
@@ -222,6 +223,17 @@ public abstract class Fleet {
        
        return hits;
     }//end of spaceBattle()
+   
+   public int pdsFire(int pdsCV){
+       int hits = 0;
+       
+       for(int i = getPDS(); i > 0; i--){
+           if(1 + combatDie.nextInt(10) >= pdsCV )
+               hits++;
+       }
+       
+       return hits;
+   }
    
    @Override
    public String toString(){

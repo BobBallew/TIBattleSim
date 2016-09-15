@@ -18,4 +18,8 @@ public class FederationOfSol extends Fleet{
     public int rollDice(){
       return super.spaceBattle(5, 9, 7, 9, 9, 3);
     }
+    
+    public int rollPDSDice(){
+      return super.pdsFire(6);
+    }
 }

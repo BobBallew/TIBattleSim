@@ -13,8 +13,9 @@ public class TIBattleSim {
     public static void main(String[] args) {
     
     for(int i = 0; i < 1000; i++){
-        FederationOfSol attacker = new FederationOfSol(1,1,1,1,1,1,0,0,0);
-        FederationOfSol defender = new FederationOfSol(1,1,1,1,1,1,0,0,0);
+        FederationOfSol attacker = new FederationOfSol(1,1,1,1,1,0,0,0,0);
+        FederationOfSol defender = new FederationOfSol(1,1,1,1,1,0,3,0,0);
+        attacker.removeUnits(defender.rollPDSDice());
         while(attacker.getTotalShips() > 0 && defender.getTotalShips() > 0){
             int defenderHits = defender.rollDice();
             int attackerHits = attacker.rollDice();
