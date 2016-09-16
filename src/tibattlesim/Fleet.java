@@ -36,7 +36,7 @@ public abstract class Fleet {
     private int dreadnoughts;
     private int warSun;
    
-  
+    private Race race;
 
     //variables for storing the amount of units present but not in battle
     private int groundForces;
@@ -52,9 +52,11 @@ public abstract class Fleet {
     The only issue with this validation is differentiating between carried pds
     units and active pds units. probably not worth it.
     */
-    public Fleet(int dreadnoughts, int carriers, int cruisers, int destroyers,
+    public Fleet(Race race, int dreadnoughts, int carriers, int cruisers, int destroyers,
                 int fighters, int warSun, int groundForces, int pds, int spaceDocks)
     {
+        
+        this.race = race;
 
        //for testing purposes only. replace with some logic...probably
        this.dreadnought2 = 0;
@@ -208,69 +210,68 @@ public abstract class Fleet {
         }
     }//end of removeFighters
     
-    public int antifighterBarrage(int destroyersCV)
+    public int rollAntifighterBarrageDice()
     {
         int hits = 0;
         
         for(int i = getDestroyers(); i > 0; i--)
         {
-            if(1 + combatDie.nextInt(10) >= destroyersCV)
+            if(1 + combatDie.nextInt(10) >= race.getDestroyerCV())
                 hits++;
         }
         return hits;
     }//end of antifighterBarrage
 
-    public int spaceBattle(int dreadnoughtsCV, int carriersCV, int cruisersCV,
-                         int destroyersCV, int fightersCV, int warSunCV)
+    public int rollSpaceBattleDice()
     {
         int hits = 0;
 
         for(int i = getDreadnoughts(); i > 0; i--)
         {
-            if(1 + combatDie.nextInt(10) >= dreadnoughtsCV)
+            if(1 + combatDie.nextInt(10) >= race.getDreadNoughtCV())
                 hits++;
         }
 
         for(int i = getCarriers(); i > 0; i--)
         {
-            if(1 + combatDie.nextInt(10) >= carriersCV)
+            if(1 + combatDie.nextInt(10) >= race.getCarrierCV())
                 hits++;
         }
 
         for(int i = getCruisers(); i > 0; i--)
         {
-            if(1 + combatDie.nextInt(10) >= cruisersCV)
+            if(1 + combatDie.nextInt(10) >= race.getCruiserCV())
                 hits++;
         }
 
         for(int i = getDestroyers(); i > 0; i--)
         {
-            if(1 + combatDie.nextInt(10) >= destroyersCV)
+            if(1 + combatDie.nextInt(10) >= race.getDestroyerCV())
                 hits++;
         }
 
         for(int i = getFighters(); i > 0; i--)
         {
-            if(1 + combatDie.nextInt(10) >= fightersCV)
+            if(1 + combatDie.nextInt(10) >= race.getFighterCV())
                 hits++;
         }
 
         for(int i = getWarSun() * 3; i > 0; i--)
         {
-            if(1 + combatDie.nextInt(10) >= warSunCV)
+            if(1 + combatDie.nextInt(10) >= race.getWarSunCV())
                 hits++;
         }
 
         return hits;
      }//end of spaceBattle()
 
-    public int pdsFire(int pdsCV)
+    public int rollPDSDice()
     {
         int hits = 0;
 
         for(int i = getPDS(); i > 0; i--)
         {
-            if(1 + combatDie.nextInt(10) >= pdsCV )
+            if(1 + combatDie.nextInt(10) >= race.getPDSCV())
                 hits++;
         }
 

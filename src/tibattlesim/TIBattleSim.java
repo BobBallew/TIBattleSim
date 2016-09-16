@@ -14,17 +14,17 @@ public class TIBattleSim {
     
     for(int i = 0; i < 1000; i++) 
     {
-        FederationOfSol attacker = new FederationOfSol(1,1,1,1,1,0,0,0,0);
-        FederationOfSol defender = new FederationOfSol(1,1,1,1,1,0,3,0,0);
+        FederationOfSol attacker = new FederationOfSol(Race.FEDERATIONOFSOL, 1,1,1,1,1,0,0,0,0);
+        FederationOfSol defender = new FederationOfSol(Race.FEDERATIONOFSOL, 1,1,1,1,1,0,3,0,0);
         attacker.removeUnits(defender.rollPDSDice());
-        attacker.removeFighters(defender.rollantifighterBarrageDice());
-        defender.removeFighters(attacker.rollantifighterBarrageDice());
+        attacker.removeFighters(defender.rollAntifighterBarrageDice());
+        defender.removeFighters(attacker.rollAntifighterBarrageDice());
         
         while(attacker.getTotalShips() > 0 && defender.getTotalShips() > 0)
         {
             
-            int defenderHits = defender.rollDice();
-            int attackerHits = attacker.rollDice();
+            int defenderHits = defender.rollSpaceBattleDice();
+            int attackerHits = attacker.rollSpaceBattleDice();
             attacker.removeUnits(defenderHits);
             defender.removeUnits(attackerHits);
             
