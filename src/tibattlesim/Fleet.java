@@ -23,12 +23,13 @@ public abstract class Fleet {
     the extra hitpoint of the dreadnought and the warsun are stored as units
     and referred to as dreadnought2 and warSun2.
     */
-    private int[] ships = new int[8];
+    private int[] ships = new int[9];
     
     //these variables are for organizing the order of the units in the ships array
     //and are assigned values 0-7
-    private int dreadnought2;
+    private int dreadnoughts2;
     private int warSun2;
+    private int carriers2;
     private int fighters;
     private int carriers;
     private int cruisers;
@@ -59,20 +60,21 @@ public abstract class Fleet {
         this.race = race;
 
        //for testing purposes only. replace with some logic...probably
-       this.dreadnought2 = 0;
+       this.dreadnoughts2 = 0;
        this.warSun2 = 1;
-       this.fighters = 2;
-       this.carriers = 3;
-       this.destroyers = 4;
-       this.cruisers = 5;
-       this.dreadnoughts = 6;
-       this.warSun = 7;
+       this.carriers2 = 2;
+       this.fighters = 3;
+       this.carriers = 4;
+       this.destroyers = 5;
+       this.cruisers = 6;
+       this.dreadnoughts = 7;
+       this.warSun = 8;
 
        if(dreadnoughts < 0 || dreadnoughts > 5)
            throw new IllegalArgumentException("Dreadnoughts must be 0-5");
        else{
            ships[this.dreadnoughts] = dreadnoughts;
-           ships[this.dreadnought2] = dreadnoughts;
+           ships[this.dreadnoughts2] = dreadnoughts;
             }
 
        if(carriers < 0 || carriers > 4)
@@ -127,11 +129,21 @@ public abstract class Fleet {
     {
         return ships[this.dreadnoughts];
     }
+    
+    public int getDreadnoughts2()
+    {
+        return ships[dreadnoughts2];
+    }
 
     //return carriers
     public int getCarriers()
     {
         return ships[this.carriers];
+    }
+    
+    public int getCarriers2()
+    {
+        return ships[carriers2];
     }
 
     //return cruisers
@@ -156,6 +168,11 @@ public abstract class Fleet {
     public int getWarSun()
     {
         return ships[this.warSun];
+    }
+    
+    public int getWarSun2()
+    {
+        return ships[warSun2];
     }
 
     //return ground forces
@@ -183,7 +200,7 @@ public abstract class Fleet {
         for(int unit: ships)
             total += unit;
 
-        return total - getWarSun()- getDreadnoughts();
+        return total - getWarSun2()- getDreadnoughts2() - getCarriers2();
     }
 
     public void removeUnits(int hits)
