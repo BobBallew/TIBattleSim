@@ -53,7 +53,8 @@ public abstract class Fleet {
     units and active pds units. probably not worth it.
     */
     public Fleet(int dreadnoughts, int carriers, int cruisers, int destroyers,
-                int fighters, int warSun, int groundForces, int pds, int spaceDocks){
+                int fighters, int warSun, int groundForces, int pds, int spaceDocks)
+    {
 
        //for testing purposes only. replace with some logic...probably
        this.dreadnought2 = 0;
@@ -115,58 +116,67 @@ public abstract class Fleet {
        else
            this.spaceDocks = spaceDocks;
 
-
     }//end of constructor
 
     SecureRandom combatDie = new SecureRandom();//new RNG object
 
     //return dreadnoughts
-    public int getDreadnoughts(){
+    public int getDreadnoughts()
+    {
         return ships[this.dreadnoughts];
     }
 
     //return carriers
-    public int getCarriers(){
+    public int getCarriers()
+    {
         return ships[this.carriers];
     }
 
     //return cruisers
-    public int getCruisers(){
+    public int getCruisers()
+    {
         return ships[this.cruisers];
     }
 
     //return destroyers
-    public int getDestroyers(){
+    public int getDestroyers()
+    {
         return ships[this.destroyers];
     }
 
     //return fighters
-    public int getFighters(){
+    public int getFighters()
+    {
         return ships[this.fighters];
     }
 
     //return warsun
-    public int getWarSun(){
+    public int getWarSun()
+    {
         return ships[this.warSun];
     }
 
     //return ground forces
-    public int getGroundForces(){
+    public int getGroundForces()
+    {
         return this.groundForces;
     }
 
     //return pds
-    public int getPDS(){
+    public int getPDS()
+    {
         return this.pds;
     }
 
     //return space docks
-    public int getSpaceDocks(){
+    public int getSpaceDocks()
+    {
         return this.spaceDocks;
     }
 
     //return total ships in ships array
-    public int getTotalShips(){
+    public int getTotalShips()
+    {
         int total = 0;
         for(int unit: ships)
             total += unit;
@@ -174,10 +184,14 @@ public abstract class Fleet {
         return total - getWarSun()- getDreadnoughts();
     }
 
-    public void removeUnits(int hits){
-        for(int i = hits; i > 0; i--){
-            for(int unit = 0; unit < ships.length; unit ++){
-                if(ships[unit] > 0){
+    public void removeUnits(int hits)
+    {
+        for(int i = hits; i > 0; i--)
+        {
+            for(int unit = 0; unit < ships.length; unit ++)
+            {
+                if(ships[unit] > 0)
+                {
                     ships[unit]--;
                     break;
                 }
@@ -186,37 +200,44 @@ public abstract class Fleet {
     }//end of removeUnits()
 
     public int spaceBattle(int dreadnoughtsCV, int carriersCV, int cruisersCV,
-                         int destroyersCV, int fightersCV, int warSunCV){
+                         int destroyersCV, int fightersCV, int warSunCV)
+    {
 
 
         int hits = 0;
 
-        for(int i = getDreadnoughts(); i > 0; i--){
+        for(int i = getDreadnoughts(); i > 0; i--)
+        {
             if(1 + combatDie.nextInt(10) >= dreadnoughtsCV)
                 hits++;
         }
 
-        for(int i = getCarriers(); i > 0; i--){
+        for(int i = getCarriers(); i > 0; i--)
+        {
             if(1 + combatDie.nextInt(10) >= carriersCV)
                 hits++;
         }
 
-        for(int i = getCruisers(); i > 0; i--){
+        for(int i = getCruisers(); i > 0; i--)
+        {
             if(1 + combatDie.nextInt(10) >= cruisersCV)
                 hits++;
         }
 
-        for(int i = getDestroyers(); i > 0; i--){
+        for(int i = getDestroyers(); i > 0; i--)
+        {
             if(1 + combatDie.nextInt(10) >= destroyersCV)
                 hits++;
         }
 
-        for(int i = getFighters(); i > 0; i--){
+        for(int i = getFighters(); i > 0; i--)
+        {
             if(1 + combatDie.nextInt(10) >= fightersCV)
                 hits++;
         }
 
-        for(int i = getWarSun() * 3; i > 0; i--){
+        for(int i = getWarSun() * 3; i > 0; i--)
+        {
             if(1 + combatDie.nextInt(10) >= warSunCV)
                 hits++;
         }
@@ -224,10 +245,12 @@ public abstract class Fleet {
         return hits;
      }//end of spaceBattle()
 
-    public int pdsFire(int pdsCV){
+    public int pdsFire(int pdsCV)
+    {
         int hits = 0;
 
-        for(int i = getPDS(); i > 0; i--){
+        for(int i = getPDS(); i > 0; i--)
+        {
             if(1 + combatDie.nextInt(10) >= pdsCV )
                 hits++;
         }
@@ -236,7 +259,8 @@ public abstract class Fleet {
     }
 
     @Override
-    public String toString(){
+    public String toString()
+    {
         return String.format("%n%s%d%n%s%d%n%s%d%n%s%d%n%s%d%n%s%d%n%s%d%n%s%d%n%s%d%n%s%d%n",
                 "Total Ships in fleet: ", getTotalShips(),
                 "Dreadnoughts: ", getDreadnoughts(),
