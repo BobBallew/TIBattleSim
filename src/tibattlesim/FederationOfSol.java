@@ -22,4 +22,9 @@ public class FederationOfSol extends Fleet{
     public int rollPDSDice(){
       return super.pdsFire(6);
     }
+    
+    public int rollantifighterBarrageDice()
+    {
+       return super.antifighterBarrage(9);
+    }
 }//end of FederationOfSol

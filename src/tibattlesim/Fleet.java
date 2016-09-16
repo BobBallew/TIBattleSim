@@ -198,12 +198,31 @@ public abstract class Fleet {
             }
         }
     }//end of removeUnits()
+    
+    public void removeFighters(int hits)
+    {
+        for(int i = hits; i > 0; i--)
+        {
+            if(getFighters() > 0)
+                ships[fighters]--;
+        }
+    }//end of removeFighters
+    
+    public int antifighterBarrage(int destroyersCV)
+    {
+        int hits = 0;
+        
+        for(int i = getDestroyers(); i > 0; i--)
+        {
+            if(1 + combatDie.nextInt(10) >= destroyersCV)
+                hits++;
+        }
+        return hits;
+    }//end of antifighterBarrage
 
     public int spaceBattle(int dreadnoughtsCV, int carriersCV, int cruisersCV,
                          int destroyersCV, int fightersCV, int warSunCV)
     {
-
-
         int hits = 0;
 
         for(int i = getDreadnoughts(); i > 0; i--)

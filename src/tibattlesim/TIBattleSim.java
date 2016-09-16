@@ -17,6 +17,8 @@ public class TIBattleSim {
         FederationOfSol attacker = new FederationOfSol(1,1,1,1,1,0,0,0,0);
         FederationOfSol defender = new FederationOfSol(1,1,1,1,1,0,3,0,0);
         attacker.removeUnits(defender.rollPDSDice());
+        attacker.removeFighters(defender.rollantifighterBarrageDice());
+        defender.removeFighters(attacker.rollantifighterBarrageDice());
         
         while(attacker.getTotalShips() > 0 && defender.getTotalShips() > 0)
         {
