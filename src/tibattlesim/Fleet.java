@@ -15,28 +15,12 @@ Each race has a max of:
 
 //imports
 import java.security.SecureRandom;
+import java.util.*;
 
-public abstract class Fleet {
-    
-    /*
-    the ships array stores the amount of each ship in the fleet.
-    the extra hitpoint of the dreadnought and the warsun are stored as units
-    and referred to as dreadnought2 and warSun2.
-    */
-    private int[] ships = new int[9];
-    
-    //these variables are for organizing the order of the units in the ships array
-    //and are assigned values 0-7
-    private int dreadnoughts2;
-    private int warSun2;
-    private int carriers2;
-    private int fighters;
-    private int carriers;
-    private int cruisers;
-    private int destroyers;
-    private int dreadnoughts;
-    private int warSun;
-   
+public class Fleet {
+
+    List<Ship> ships = new ArrayList<Ship>();
+
     private Race race;
 
     //variables for storing the amount of units present but not in battle
@@ -45,63 +29,49 @@ public abstract class Fleet {
     private int spaceDocks;
    
     //constructor
-    /*
-    fighters, pds, and ground forces can further be validated against carrying
-    capacity of the fleet:
-        if( fighters > warsun * 3 + carriers * 6 + spaceDocks * 3 - pds - groundForces)
-            throw new IllegalArgumentException("Fleet has exceeded maximum capacity");
-    The only issue with this validation is differentiating between carried pds
-    units and active pds units. probably not worth it.
-    */
+    
     public Fleet(Race race, int dreadnoughts, int carriers, int cruisers, int destroyers,
                 int fighters, int warSun, int groundForces, int pds, int spaceDocks)
     {
         
         this.race = race;
 
-       //for testing purposes only. replace with some logic...probably
-       this.dreadnoughts2 = 0;
-       this.warSun2 = 1;
-       this.carriers2 = 2;
-       this.fighters = 3;
-       this.carriers = 4;
-       this.destroyers = 5;
-       this.cruisers = 6;
-       this.dreadnoughts = 7;
-       this.warSun = 8;
-
        if(dreadnoughts < 0 || dreadnoughts > 5)
            throw new IllegalArgumentException("Dreadnoughts must be 0-5");
        else{
-           ships[this.dreadnoughts] = dreadnoughts;
-           ships[this.dreadnoughts2] = dreadnoughts;
+           for(int i = dreadnoughts; i < 0; i--)
+               ships.add(new Ship("dreadnought", 2));
             }
 
        if(carriers < 0 || carriers > 4)
            throw new IllegalArgumentException("Carriers must be 0-4");
-       else
-           ships[this.carriers] = carriers;
-
+       else{
+           for(int i = carriers; i > 0; i-- )
+               ships.add(new Ship("carrier", 1));
+            }
        if(cruisers < 0 || cruisers > 8)
            throw new IllegalArgumentException("Cruisers must be 0-8");
        else
-           ships[this.cruisers] = cruisers;
+           for(int i = cruisers; i > 0; i--)
+               ships.add(new Ship("cruiser", 1));
 
        if(destroyers < 0 || destroyers > 8)
            throw new IllegalArgumentException("Destroyers must be 0-8");
        else
-           ships[this.destroyers] = destroyers;
+           for(int i = destroyers; i > 0; i--)
+               ships.add(new Ship("destroyer", 1));
 
        if(fighters < 0 || fighters > 10)
            throw new IllegalArgumentException("Fighters must be 0-10");
        else
-           ships[this.fighters] = fighters;
+           for(int i = fighters; i > 0; i--)
+               ships.add(new Ship("fighter", 1));
 
        if(warSun < 0 || warSun > 2)
            throw new IllegalArgumentException("War Suns must be 0-2");
        else{
-           ships[this.warSun] = warSun;
-           ships[this.warSun2] = warSun;
+           for(int i = warSun; i > 0; i--)
+               ships.add(new Ship("warsun", 2));
             }
 
        if(groundForces < 0 || groundForces > 12)
@@ -123,57 +93,79 @@ public abstract class Fleet {
     }//end of constructor
 
     SecureRandom combatDie = new SecureRandom();//new RNG object
-
+    
     //return dreadnoughts
     public int getDreadnoughts()
     {
-        return ships[this.dreadnoughts];
-    }
-    
-    public int getDreadnoughts2()
-    {
-        return ships[dreadnoughts2];
+        int count = 0;
+        
+        for(Ship thisShip: ships){
+            if("dreadnought".equals(thisShip.getID()))
+                count++;
+        }
+        return count;
     }
 
     //return carriers
     public int getCarriers()
     {
-        return ships[this.carriers];
-    }
-    
-    public int getCarriers2()
-    {
-        return ships[carriers2];
+        int count = 0;
+        
+        for(Ship thisShip: ships){
+            if("carrier".equals(thisShip.getID()))
+                count++;
+        }
+        return count;
     }
 
     //return cruisers
     public int getCruisers()
     {
-        return ships[this.cruisers];
+        int count = 0;
+        
+        for(Ship thisShip: ships){
+            if("cruiser".equals(thisShip.getID()))
+                count++;
+        }
+        return count;
     }
 
     //return destroyers
     public int getDestroyers()
     {
-        return ships[this.destroyers];
+        int count = 0;
+        
+        for(Ship thisShip: ships){
+            if("cruiser".equals(thisShip.getID()))
+                count++;
+        }
+        return count;
     }
 
     //return fighters
     public int getFighters()
     {
-        return ships[this.fighters];
+        int count = 0;
+        
+        for(Ship thisShip: ships){
+            if("fighter".equals(thisShip.getID()))
+                count++;
+        }
+        return count;
     }
 
     //return warsun
     public int getWarSun()
     {
-        return ships[this.warSun];
+        int count = 0;
+        
+        for(Ship thisShip: ships){
+            if("warsun".equals(thisShip.getID()))
+                count++;
+        }
+        return count;
     }
     
-    public int getWarSun2()
-    {
-        return ships[warSun2];
-    }
 
     //return ground forces
     public int getGroundForces()
@@ -196,42 +188,94 @@ public abstract class Fleet {
     //return total ships in ships array
     public int getTotalShips()
     {
-        int total = 0;
-        for(int unit: ships)
-            total += unit;
-
-        return total - getWarSun2()- getDreadnoughts2() - getCarriers2();
+        if(ships.isEmpty())
+            return 0;
+        else
+            return ships.size();
     }
-
-    public void removeUnits(int hits)
+    
+    
+    public void assignFleetDamage(int hits)//temporary- for testing
     {
         for(int i = hits; i > 0; i--)
         {
-            for(int unit = 0; unit < ships.length; unit ++)
+            if(getTotalShips() > 0)
             {
-                if(ships[unit] > 0)
-                {
-                    ships[unit]--;
-                    break;
-                }
+                for(Ship thisShip: ships)
+                    if("dreadnought".equals(thisShip.getID()) && thisShip.getHP() > 1)
+                    {
+                        thisShip.takeDamage();
+                        break;
+                    }
+                    else if("warsun".equals(thisShip.getID()) && thisShip.getHP() > 1)
+                    {
+                        thisShip.takeDamage();
+                        break;
+                    }
+                    else if("carrier".equals(thisShip.getID()) && thisShip.getHP() > 1)
+                    {
+                        thisShip.takeDamage();
+                        break;
+                    }
+                    else if("fighter".equals(thisShip.getID()) && thisShip.getHP() > 0)
+                    {
+                        thisShip.takeDamage();
+                        break;
+                    }
+                    else if("destroyer".equals(thisShip.getID()) && thisShip.getHP() > 0)
+                    {
+                        thisShip.takeDamage();
+                        break;
+                    }
+                    else if("carrier".equals(thisShip.getID()) && thisShip.getHP() > 0)
+                    {
+                        thisShip.takeDamage();
+                        break;
+                    }
+                    else if("cruiser".equals(thisShip.getID()) && thisShip.getHP() > 0)
+                    {
+                        thisShip.takeDamage();
+                        break;
+                    }
+                    else if("dreadnought".equals(thisShip.getID()) && thisShip.getHP() > 0)
+                    {
+                        thisShip.takeDamage();
+                        break;
+                    }
+                    else if("warsun".equals(thisShip.getID()) && thisShip.getHP() > 0)
+                    {
+                        thisShip.takeDamage();
+                        break;
+                    }
+                    else
+                    {   
+                        break;
+                    }
             }
-        }
+        }//end of outer for loop
+        
+     
+    }//end of assignFleetDamage
+    
+    public void removeUnits()
+    {
+        Iterator<Ship> shipCounter = ships.iterator();
+            while(shipCounter.hasNext())
+            {
+               Ship thisShip = shipCounter.next();
+               if(thisShip.getHP() == 0)
+                   shipCounter.remove();
+            }
+       
     }//end of removeUnits()
     
-    public void removeFighters(int hits)
-    {
-        for(int i = hits; i > 0; i--)
-        {
-            if(getFighters() > 0)
-                ships[fighters]--;
-        }
-    }//end of removeFighters
+    
     
     public int rollAntifighterBarrageDice()
     {
         int hits = 0;
         
-        for(int i = getDestroyers(); i > 0; i--)
+        for(int i = getDestroyers() * 2 ; i > 0; i--)
         {
             if(1 + combatDie.nextInt(10) >= race.getDestroyerCV())
                 hits++;
