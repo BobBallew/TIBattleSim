@@ -29,7 +29,6 @@ public class Fleet {
     private int spaceDocks;
    
     //constructor
-    
     public Fleet(Race race, int dreadnoughts, int carriers, int cruisers, int destroyers,
                 int fighters, int warSun, int groundForces, int pds, int spaceDocks)
     {
@@ -91,6 +90,14 @@ public class Fleet {
            this.spaceDocks = spaceDocks;
 
     }//end of constructor
+    
+    public Fleet(Fleet fleet)
+    {
+        this(fleet.getRace(), fleet.getDreadnoughts(), fleet.getCarriers(), 
+                fleet.getCruisers(), fleet.getDestroyers(), fleet.getFighters(),
+                fleet.getWarSun(), fleet.getGroundForces(), fleet.getPDS(),
+                fleet.getSpaceDocks());
+    }
 
     SecureRandom combatDie = new SecureRandom();//new RNG object
     
@@ -183,6 +190,11 @@ public class Fleet {
     public int getSpaceDocks()
     {
         return this.spaceDocks;
+    }
+    
+    public Race getRace()
+    {
+        return this.race;
     }
 
     //return total ships in ships array

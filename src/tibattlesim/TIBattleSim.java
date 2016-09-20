@@ -12,11 +12,13 @@ public class TIBattleSim {
     
     public static void main(String[] args) {
     
+        Fleet fleet1 = new Fleet(Race.FEDERATIONOFSOL, 1,1,1,1,1,0,0,0,0);
+        Fleet fleet2 = new Fleet(Race.FEDERATIONOFSOL, 1,1,1,1,1,0,0,0,0);
         
     for(int i = 0; i < 1000; i++) 
     {
-        Fleet attacker = new Fleet(Race.FEDERATIONOFSOL, 1,1,1,1,1,0,0,0,0);
-        Fleet defender = new Fleet(Race.FEDERATIONOFSOL, 1,1,1,1,1,0,0,0,0);
+        Fleet attacker = new Fleet(fleet1);
+        Fleet defender = new Fleet(fleet2);
         attacker.assignFleetDamage(defender.rollPDSDice());
         attacker.removeUnits();
         
